@@ -75,18 +75,73 @@ app.use( express.static(__dirname + '/public') )
 // ------------------------------------------------------
 
 // handling all GET requests to 127.0.0.1:3000/
+
+/*
 app.get('/' , ( req, res ) => {
     res.sendFile(__dirname + '/views/landing.html')
 })
+
 
 // handling all GET requests to 127.0.0.1:3000/about
 app.get('/about' , ( req, res ) => {
     res.sendFile(__dirname + '/views/about.html')
 })
 
+
+app.get('/about/:user', (req, res) => {
+    res.send('Works ' + req.params.user)
+})
+
+
 // handling all GET requests to 127.0.0.1:3000/home
 app.get('/home', (ihreq, ihres) => {
     ihres.sendFile(__dirname + '/views/home.html')
 })
+
+
+app.get('/:user', (req, res) => {
+    const {user, age}  = req.params
+    res.send('Hey '+ user + ' ' + age)
+})
+*/
+
+
+// Activity
+
+app.get('/', (req, res) => {
+    res.send("Hi there, welcome to my assignment!")
+})
+
+
+app.get('/speak/:animal', (req, res) => {
+    const {animal} = req.params
+
+    switch( animal ) {
+        case 'pig':
+            res.send("The pig says 'Oink!'") 
+            break;
+        case 'dog':
+            res.send("The dog says 'Woff Woof!'")
+            break;
+        case 'cow':
+            res.send("The cow says 'Moo'")   
+            break;       
+    }
+})
+
+app.get('/greet/:text/:num', (req, res) => {
+    const {text, num} = req.params
+    res.send( (text + ' ').repeat(num)  )
+})
+
+// Always put this route as the last one
+app.get('*', (req, res) => {
+    res.send("Sorry, page not found...Blame our developer")
+})
+
+// Also another way to show 404 pages
+// app.use((req, res) => {
+//     res.send("Sorry, page not found...Blame our developer")
+// })
 
 app.listen(3000)
